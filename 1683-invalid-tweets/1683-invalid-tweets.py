@@ -19,6 +19,4 @@ result = tweets[tweets["content"].str.len() > 15][["tweet_id"]]
 
 print(result)
 
-
-
 """
