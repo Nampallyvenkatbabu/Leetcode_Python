@@ -51,7 +51,6 @@ def total_time(employees: pd.DataFrame) -> pd.DataFrame:
 ```
 
 ---
-
 🧪 Example
 Input
 emp_id	event_day	in_time	out_time
@@ -90,6 +89,4 @@ Renaming event_day → day ensures schema matches expected format.
 
 🏷 Tags
 Pandas GroupBy Aggregation LeetCode
-
-## ✅ Python (Pandas) Solution
 
