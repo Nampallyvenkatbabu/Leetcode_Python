@@ -57,26 +57,6 @@ def second_highest_salary(employee: pd.DataFrame) -> pd.DataFrame:
 
 ---
 
-## ⏱ Complexity Analysis
-
-| Complexity | Value |
-|------------|-------|
-| Time | **O(n log n)** |
-| Space | **O(n)** |
-
-### Why?
-
-- Sorting takes **O(n log n)**.
-- Removing duplicates takes **O(n)**.
-- Accessing the second element takes **O(1)**.
-
-Overall complexity:
-
-**Time:** `O(n log n)`
-
-**Space:** `O(n)`
-
----
 
 ## 🧪 Example
 
