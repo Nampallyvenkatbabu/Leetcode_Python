@@ -49,9 +49,6 @@ def total_time(employees: pd.DataFrame) -> pd.DataFrame:
     return df
 ```
 
-
-
-
 ---
 
 🧪 Example
