@@ -1,54 +1,90 @@
-<h2><a href="https://leetcode.com/problems/find-total-time-spent-by-each-employee">1741. Find Total Time Spent by Each Employee</a></h2><h3>Easy</h3><hr><p>Table: <code>Employees</code></p>
+# 1741. Total Time Spent by Each Employee
 
-<pre>
-+-------------+------+
-| Column Name | Type |
-+-------------+------+
-| emp_id      | int  |
-| event_day   | date |
-| in_time     | int  |
-| out_time    | int  |
-+-------------+------+
-(emp_id, event_day, in_time) is the primary key (combinations of columns with unique values) of this table.
-The table shows the employees&#39; entries and exits in an office.
-event_day is the day at which this event happened, in_time is the minute at which the employee entered the office, and out_time is the minute at which they left the office.
-in_time and out_time are between 1 and 1440.
-It is guaranteed that no two events on the same day intersect in time, and in_time &lt; out_time.
-</pre>
+![Difficulty](https://img.shields.io/badge/Difficulty-Easy-green)
+![Language](https://img.shields.io/badge/Language-Pandas-blue)
 
-<p>&nbsp;</p>
+## 🔗 Problem
+**LeetCode:** https://leetcode.com/problems/total-time-spent-by-each-employee/
 
-<p>Write a solution to calculate the total time <strong>in minutes</strong> spent by each employee on each day at the office. Note that within one day, an employee can enter and leave more than once. The time spent in the office for a single entry is <code>out_time - in_time</code>.</p>
+### Problem Statement
+Write a solution to calculate the **total time in minutes** spent by each employee on each day at the office.  
+An employee can enter and leave more than once in a single day.  
+The time spent for a single entry is `out_time - in_time`.  
 
-<p>Return the result table in <strong>any order</strong>.</p>
+Return the result table in any order.
 
-<p>The result format is in the following example.</p>
+---
 
-<p>&nbsp;</p>
-<p><strong class="example">Example 1:</strong></p>
+## 💡 Intuition
+To compute total time per employee per day:
+- Calculate the difference between `out_time` and `in_time` for each entry.  
+- Group by both `emp_id` and `event_day`.  
+- Sum the total time for each group.  
+- Rename `event_day` to `day` to match the expected output format.
 
-<pre>
-<strong>Input:</strong> 
-Employees table:
-+--------+------------+---------+----------+
-| emp_id | event_day  | in_time | out_time |
-+--------+------------+---------+----------+
-| 1      | 2020-11-28 | 4       | 32       |
-| 1      | 2020-11-28 | 55      | 200      |
-| 1      | 2020-12-03 | 1       | 42       |
-| 2      | 2020-11-28 | 3       | 33       |
-| 2      | 2020-12-09 | 47      | 74       |
-+--------+------------+---------+----------+
-<strong>Output:</strong> 
-+------------+--------+------------+
-| day        | emp_id | total_time |
-+------------+--------+------------+
-| 2020-11-28 | 1      | 173        |
-| 2020-11-28 | 2      | 30         |
-| 2020-12-03 | 1      | 41         |
-| 2020-12-09 | 2      | 27         |
-+------------+--------+------------+
-<strong>Explanation:</strong> 
-Employee 1 has three events: two on day 2020-11-28 with a total of (32 - 4) + (200 - 55) = 173, and one on day 2020-12-03 with a total of (42 - 1) = 41.
-Employee 2 has two events: one on day 2020-11-28 with a total of (33 - 3) = 30, and one on day 2020-12-09 with a total of (74 - 47) = 27.
-</pre>
+---
+
+## 🚀 Approach
+1. Compute `total_time = out_time - in_time` for each row.  
+2. Use `groupby(["emp_id", "event_day"])` to group by employee and day.  
+3. Aggregate with `.sum()` to get total minutes.  
+4. Use `as_index=False` to keep group keys as columns.  
+5. Rename `event_day → day` for final output.  
+
+---
+
+## ✅ Python (Pandas) Solution
+```python
+import pandas as pd
+
+def total_time(employees: pd.DataFrame) -> pd.DataFrame:
+    # Calculate time spent for each entry
+    employees["total_time"] = employees["out_time"] - employees["in_time"]
+
+    # Group by emp_id and event_day, summing total_time
+    df = employees.groupby(["emp_id", "event_day"], as_index=False)["total_time"].sum()
+
+    # Rename event_day → day to match expected output
+    df = df.rename(columns={"event_day": "day"})
+
+    return df
+---
+
+🧪 Example
+Input
+emp_id	event_day	in_time	out_time
+1	2020-11-28	4	32
+1	2020-11-28	55	200
+1	2020-12-03	4	42
+2	2020-11-28	3	33
+2	2020-12-09	47	74
+
+
+After Calculating total_time
+emp_id	event_day	total_time
+1	2020-11-28	28
+1	2020-11-28	145
+1	2020-12-03	38
+2	2020-11-28	30
+2	2020-12-09	27
+
+
+After GroupBy + Sum
+day	emp_id	total_time
+2020-11-28	1	173
+2020-12-03	1	38
+2020-11-28	2	30
+2020-12-09	2	27
+
+
+🔑 Key Takeaways
+out_time - in_time computes time per entry.
+
+groupby(["emp_id", "event_day"]) aggregates per employee per day.
+
+as_index=False keeps group keys as columns for clean SQL‑style output.
+
+Renaming event_day → day ensures schema matches expected format.
+
+🏷 Tags
+Pandas GroupBy Aggregation LeetCode
