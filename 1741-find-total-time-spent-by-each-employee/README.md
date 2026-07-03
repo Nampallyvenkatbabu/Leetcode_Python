@@ -33,7 +33,6 @@ To compute total time per employee per day:
 
 ---
 
-## ✅ Python (Pandas) Solution
 ```python
 import pandas as pd
 
@@ -48,6 +47,8 @@ def total_time(employees: pd.DataFrame) -> pd.DataFrame:
     df = df.rename(columns={"event_day": "day"})
 
     return df
+```
+
 ---
 
 🧪 Example
@@ -88,3 +89,6 @@ Renaming event_day → day ensures schema matches expected format.
 
 🏷 Tags
 Pandas GroupBy Aggregation LeetCode
+
+## ✅ Python (Pandas) Solution
+
