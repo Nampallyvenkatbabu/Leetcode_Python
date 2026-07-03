@@ -33,6 +33,7 @@ To compute total time per employee per day:
 
 ---
 
+## ✅ Python (Pandas) Solution
 ```python
 import pandas as pd
 
