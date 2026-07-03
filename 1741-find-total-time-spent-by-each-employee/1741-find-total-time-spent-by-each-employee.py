@@ -1,6 +1,7 @@
 import pandas as pd
 
 def total_time(employees: pd.DataFrame) -> pd.DataFrame:
+    
     # Calculate time spent for each entry
     employees["total_time"] = employees["out_time"] - employees["in_time"]
 
