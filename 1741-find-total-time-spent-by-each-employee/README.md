@@ -4,14 +4,20 @@
 ![Language](https://img.shields.io/badge/Language-Pandas-blue)
 
 ## 🔗 Problem
-**LeetCode:** https://leetcode.com/problems/total-time-spent-by-each-employee/
 
-### Problem Statement
+**LeetCode:** https://leetcode.com/problems/find-total-time-spent-by-each-employee/
+
+---
+
+## 📝 Problem Statement
+
 Write a solution to calculate the **total time in minutes** spent by each employee on each day at the office.
 
 An employee can enter and leave the office more than once in a single day. The time spent for each visit is calculated as:
 
-`out_time - in_time`
+```text
+out_time - in_time
+```
 
 Return the result table in **any order**.
 
@@ -19,12 +25,12 @@ Return the result table in **any order**.
 
 ## 💡 Intuition
 
-To find the total time spent by each employee every day:
+To determine the total time spent by each employee every day:
 
-- Calculate the duration of each office visit using `out_time - in_time`.
-- Group the records by both `emp_id` and `event_day`.
+- Compute the duration of every office visit using `out_time - in_time`.
+- Group records by both `emp_id` and `event_day`.
 - Sum all visit durations within each group.
-- Rename `event_day` to `day` to match the required output schema.
+- Rename `event_day` to `day` to match the expected output format.
 
 ---
 
@@ -33,9 +39,9 @@ To find the total time spent by each employee every day:
 1. Create a new column `total_time` as `out_time - in_time`.
 2. Group the data by `emp_id` and `event_day`.
 3. Sum the `total_time` values for each group.
-4. Keep the grouped columns using `as_index=False`.
+4. Keep grouped columns using `as_index=False`.
 5. Rename `event_day` to `day`.
-6. Return the resulting DataFrame.
+6. Return the final DataFrame.
 
 ---
 
@@ -65,38 +71,40 @@ def total_time(employees: pd.DataFrame) -> pd.DataFrame:
 ### Input
 
 | emp_id | event_day | in_time | out_time |
-|--------:|------------|--------:|---------:|
+|:------:|:---------:|:-------:|:--------:|
 | 1 | 2020-11-28 | 4 | 32 |
 | 1 | 2020-11-28 | 55 | 200 |
 | 1 | 2020-12-03 | 4 | 42 |
 | 2 | 2020-11-28 | 3 | 33 |
 | 2 | 2020-12-09 | 47 | 74 |
 
-### Step 1: Calculate `total_time`
+### After Calculating `total_time`
 
 | emp_id | event_day | total_time |
-|--------:|------------|-----------:|
+|:------:|:---------:|:----------:|
 | 1 | 2020-11-28 | 28 |
 | 1 | 2020-11-28 | 145 |
 | 1 | 2020-12-03 | 38 |
 | 2 | 2020-11-28 | 30 |
 | 2 | 2020-12-09 | 27 |
 
-### Step 2: Group By and Sum
+### Final Output
 
 | emp_id | day | total_time |
-|--------:|------------|-----------:|
+|:------:|:----------:|:----------:|
 | 1 | 2020-11-28 | 173 |
 | 1 | 2020-12-03 | 38 |
 | 2 | 2020-11-28 | 30 |
 | 2 | 2020-12-09 | 27 |
 
+---
+
 ## 🔑 Key Takeaways
 
-- `out_time - in_time` calculates the duration of each office visit.
+- `out_time - in_time` computes the duration of each office visit.
 - `groupby(["emp_id", "event_day"])` groups records by employee and day.
-- `.sum()` aggregates the total minutes spent in the office.
-- `as_index=False` keeps grouped columns as regular DataFrame columns.
+- `.sum()` aggregates the total minutes worked.
+- `as_index=False` preserves grouped columns as regular DataFrame columns.
 - Renaming `event_day` to `day` ensures the output matches the required schema.
 
 ---
