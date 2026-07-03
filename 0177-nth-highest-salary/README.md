@@ -1,59 +1,37 @@
-<h2><a href="https://leetcode.com/problems/nth-highest-salary">177. Nth Highest Salary</a></h2><h3>Medium</h3><hr><p>Table: <code>Employee</code></p>
+# 177. Nth Highest Salary
 
-<pre>
-+-------------+------+
-| Column Name | Type |
-+-------------+------+
-| id          | int  |
-| salary      | int  |
-+-------------+------+
-id is the primary key (column with unique values) for this table.
-Each row of this table contains information about the salary of an employee.
-</pre>
+![Difficulty](https://img.shields.io/badge/Difficulty-Medium-orange)
+![Language](https://img.shields.io/badge/Language-Python-blue)
 
-<p>&nbsp;</p>
+## 🔗 Problem
+**LeetCode:** https://leetcode.com/problems/nth-highest-salary/
 
-<p>Write a solution to find the <code>n<sup>th</sup></code> highest <strong>distinct</strong> salary from the <code>Employee</code> table. If there are less than <code>n</code> distinct salaries, return&nbsp;<code>null</code>.</p>
+### Problem Statement
+Find the **Nth highest distinct salary** from the Employee table.  
+If it doesn’t exist, return `None`.
 
-<p>The result format is in the following example.</p>
+---
 
-<p>&nbsp;</p>
-<p><strong class="example">Example 1:</strong></p>
+## 💡 Intuition
+- Sort salaries descending.  
+- Remove duplicates.  
+- Return the Nth salary if available.  
 
-<pre>
-<strong>Input:</strong> 
-Employee table:
-+----+--------+
-| id | salary |
-+----+--------+
-| 1  | 100    |
-| 2  | 200    |
-| 3  | 300    |
-+----+--------+
-n = 2
-<strong>Output:</strong> 
-+------------------------+
-| getNthHighestSalary(2) |
-+------------------------+
-| 200                    |
-+------------------------+
-</pre>
+---
 
-<p><strong class="example">Example 2:</strong></p>
+## 🚀 Approach
+1. Sort salaries.  
+2. Drop duplicates.  
+3. Use index `iloc[n-1]` if valid.  
 
-<pre>
-<strong>Input:</strong> 
-Employee table:
-+----+--------+
-| id | salary |
-+----+--------+
-| 1  | 100    |
-+----+--------+
-n = 2
-<strong>Output:</strong> 
-+------------------------+
-| getNthHighestSalary(2) |
-+------------------------+
-| null                   |
-+------------------------+
-</pre>
+---
+
+## ✅ Python Solution
+```python
+import pandas as pd
+
+def nth_highest_salary(employee: pd.DataFrame, N: int) -> pd.DataFrame:
+    sorted_salaries = employee["salary"].sort_values(ascending=False).drop_duplicates()
+    if len(sorted_salaries) < N:
+        return pd.DataFrame({"NthHighestSalary": [None]})
+    return pd.DataFrame({"NthHighestSalary": [sorted_salaries.iloc[N-1]]})
